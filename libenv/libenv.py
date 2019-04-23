@@ -477,7 +477,8 @@ class CVecEnv:
         ]
         return self._c_lib.libenv_render(self._c_env, c_mode, render_buffers)
 
-    def _tile_images(self, images: np.ndarray) -> np.ndarray:
+    @staticmethod
+    def _tile_images(images: np.ndarray) -> np.ndarray:
         """Tile a set of NHWC images"""
         num_images, height, width, chans = images.shape
         width_images = int(np.ceil(np.sqrt(num_images)))
@@ -527,6 +528,7 @@ class CVecEnv:
             return
 
         self.closed = True
+        print("close")
         self._c_lib.libenv_close(self._c_env)
         with global_open_count_lock:
             global_open_count[self._lib_path] -= 1

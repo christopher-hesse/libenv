@@ -11,7 +11,10 @@ import pytest
 from . import CVecEnv, scalar_adapter
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-TEST_ENVS = ["ctestenv", "guess-number", "gotestenv"]
+TEST_ENVS = ["ctestenv", "guess-number"]
+# gotestenv fails due to a data execution prevention error on windows
+if platform.system() != "Windows":
+    TEST_ENVS.append("gotestenv")
 
 
 def setup_module(module):
@@ -30,9 +33,10 @@ def chdir(newdir):
 
 
 def shell(cmd):
+    print(cmd)
     if isinstance(cmd, str):
         cmd = shlex.split(cmd)
-    subprocess.check_call(cmd)
+    subprocess.run(cmd, check=True)
 
 
 def build(env_name):

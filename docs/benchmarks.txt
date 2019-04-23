@@ -1,0 +1,45 @@
+========================================================================= test session starts ==========================================================================
+platform linux -- Python 3.6.5, pytest-3.6.3, py-1.5.4, pluggy-0.6.0
+benchmark: 3.1.1 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /home/christopherhesse/p/first-party/libenv, inifile:
+plugins: benchmark-3.1.1
+collected 12 items                                                                                                                                                     
+
+libenv/test_libenv.py ............                                                                                                                               [100%]
+
+
+------------------------------------------------------------------------------------- benchmark: 3 tests -------------------------------------------------------------------------------------
+Name (time in ms)                   Min                Max              Mean            StdDev            Median               IQR            Outliers       OPS            Rounds  Iterations
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test_env_speed[guess-number]     3.4650 (1.0)       5.1976 (1.0)      3.5254 (1.0)      0.1342 (1.0)      3.5088 (1.0)      0.0298 (1.0)          5;10  283.6576 (1.0)         270           1
+test_env_speed[ctestenv]         4.3366 (1.25)      6.7296 (1.29)     4.4076 (1.25)     0.1668 (1.24)     4.3890 (1.25)     0.0372 (1.25)          4;8  226.8783 (0.80)        212           1
+test_env_speed[gotestenv]        8.7708 (2.53)     11.7410 (2.26)     8.9526 (2.54)     0.3821 (2.85)     8.8812 (2.53)     0.0634 (2.13)          5;5  111.6990 (0.39)        106           1
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Legend:
+  Outliers: 1 Standard Deviation from Mean; 1.5 IQR (InterQuartile Range) from 1st Quartile and 3rd Quartile.
+  OPS: Operations Per Second, computed as 1 / Mean
+====================================================================== 12 passed in 4.50 seconds =======================================================================
+
+============================= test session starts =============================
+platform win32 -- Python 3.6.6, pytest-3.8.2, py-1.7.0, pluggy-0.7.1
+benchmark: 3.1.1 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\christopherhese\Documents\p\first-party\libenv, inifile:
+plugins: benchmark-3.1.1
+collected 12 items
+
+libenv\test_libenv.py ............                                       [100%]
+
+
+-------------------------------------------------------------------------------------- benchmark: 3 tests -------------------------------------------------------------------------------------
+Name (time in ms)                   Min                Max               Mean            StdDev            Median               IQR            Outliers       OPS            Rounds  Iterations
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+test_env_speed[guess-number]     3.6613 (1.0)       8.9966 (1.0)       4.5326 (1.0)      1.0903 (1.24)     3.9365 (1.0)      1.2516 (1.83)        41;14  220.6223 (1.0)         240           1
+test_env_speed[ctestenv]         4.9719 (1.36)     11.0731 (1.23)      5.5418 (1.22)     0.8815 (1.0)      5.0977 (1.29)     0.6834 (1.0)         24;22  180.4468 (0.82)        172           1
+test_env_speed[gotestenv]        9.1991 (2.51)     15.1608 (1.69)     10.2440 (2.26)     1.0664 (1.21)     9.8807 (2.51)     1.3352 (1.95)         13;4   97.6180 (0.44)        104           1
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Legend:
+  Outliers: 1 Standard Deviation from Mean; 1.5 IQR (InterQuartile Range) from 1st Quartile and 3rd Quartile.
+  OPS: Operations Per Second, computed as 1 / Mean
+========================== 12 passed in 6.12 seconds ==========================

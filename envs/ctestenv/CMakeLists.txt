@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.11)
+project(ctestenv VERSION 1.0.1 DESCRIPTION "libenv test environment")
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+add_library(env SHARED ctestenv.c)
+include_directories(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/../../libenv)

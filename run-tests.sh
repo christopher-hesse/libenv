@@ -1,3 +1,3 @@
 set -eux
-pip install -e .[dev]
+pip install -e .
 pytest .

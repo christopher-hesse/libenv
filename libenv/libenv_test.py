@@ -252,5 +252,5 @@ def test_env_speed(name, benchmark):
 
 
 def test_define_func():
-    env = CTestEnv()
+    env = CTestVecEnv()
     assert env.special_function(1337) == 1337

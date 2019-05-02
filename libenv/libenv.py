@@ -9,7 +9,7 @@ import copy
 import os
 import platform
 import threading
-from typing import Dict, Union, List, Any, Optional, Tuple, Type
+from typing import Dict, Union, List, Any, Optional, Tuple
 
 import numpy as np
 import gym

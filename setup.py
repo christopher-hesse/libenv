@@ -6,6 +6,7 @@ setup(
     name="libenv",
     version="0.1",
     packages=find_packages(),
+    include_package_data=True,
     install_requires=["gym~=0.12.1", "cffi~=1.11", "numpy~=1.14"],
     extras_require={"dev": ["pytest", "pytest-benchmark"]},
     use_scm_version=False

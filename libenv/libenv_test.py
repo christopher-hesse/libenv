@@ -8,7 +8,7 @@ import shutil
 import numpy as np
 import pytest
 
-from . import CVecEnv, scalar_adapter
+from . import CVecEnv
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TEST_ENVS = ["ctestenv", "guess-number"]
@@ -108,9 +108,6 @@ class CTestVecEnv(CVecEnv):
         return self.call_func("special_function", x)
 
 
-CTestEnv = scalar_adapter(CTestVecEnv)
-
-
 class GuessNumberVecEnv(CVecEnv):
     def __init__(self, num_envs=1, debug=False, **kwargs):
         super().__init__(
@@ -121,9 +118,6 @@ class GuessNumberVecEnv(CVecEnv):
         )
 
 
-GuessNumberEnv = scalar_adapter(GuessNumberVecEnv)
-
-
 class GoTestVecEnv(CVecEnv):
     def __init__(self, num_envs=1, debug=False, **kwargs):
         super().__init__(
@@ -132,18 +126,6 @@ class GoTestVecEnv(CVecEnv):
             debug=debug,
             **kwargs,
         )
-
-
-GoTestEnv = scalar_adapter(GoTestVecEnv)
-
-
-def make_env(name, **kwargs):
-    cls = {
-        "ctestenv": CTestEnv,
-        "guess-number": GuessNumberEnv,
-        "gotestenv": GoTestEnv,
-    }[name]
-    return cls(**kwargs)
 
 
 def make_venv(name, **kwargs):
@@ -179,9 +161,7 @@ def test_ctestenv(num_envs):
     """
     options = None
     venv = make_venv("ctestenv", debug=True, num_envs=num_envs, options=options)
-    env = make_env("ctestenv", debug=True, options=options)
     obs = venv.reset()
-    scalar_obs = env.reset()
     steps = 0
     for _ in range(100):
         for i in range(num_envs):
@@ -190,8 +170,6 @@ def test_ctestenv(num_envs):
             assert (obs["float32_obs"][i].reshape(-1) == np.arange(7 * 8 * 9)).all()
             for key in obs.keys():
                 assert obs[key].dtype is venv.observation_space.spaces[key].dtype
-        for key in obs.keys():
-            assert (obs[key][0] == scalar_obs[key]).all()
         actions = [
             np.ones_like(venv.action_space.sample()) * env_idx
             for env_idx in range(venv.num_envs)
@@ -200,24 +178,17 @@ def test_ctestenv(num_envs):
 
         venv.step_async(actions)
         obs, rews, dones, infos = venv.step_wait()
-        scalar_obs, scalar_rew, scalar_done, scalar_info = env.step(actions[0])
         steps += 1
 
         assert (rews == np.arange(num_envs) * steps).all()
-        assert scalar_rew == rews[0]
         frames = venv.get_images()
-        scalar_frame = env.render(mode="rgb_array")
         for env_idx in range(num_envs):
             assert (frames[env_idx].reshape(-1) == steps * env_idx).all()
             assert infos[env_idx]["info"] == steps * env_idx
-            if env_idx == 0:
-                assert (frames[env_idx] == scalar_frame).all()
-                assert (infos[env_idx]["info"] == scalar_info["info"]).all()
-
         if dones.any():
             break
 
-    assert dones.all() and scalar_done and steps == 100
+    assert dones.all() and steps == 100
     venv.close()
 
 

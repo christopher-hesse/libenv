@@ -528,7 +528,6 @@ class CVecEnv:
             return
 
         self.closed = True
-        print("close")
         self._c_lib.libenv_close(self._c_env)
         with global_open_count_lock:
             global_open_count[self._lib_path] -= 1
